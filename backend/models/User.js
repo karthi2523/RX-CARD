@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  file: {
+    type: String,
+    required: true,
+  },
 });
 
 // Pre-save middleware to hash the password before saving it

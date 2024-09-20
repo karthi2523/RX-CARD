@@ -3,9 +3,25 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const QRCode = require('qrcode');
+const multer = require('multer');
 
 const router = express.Router();
 
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, '../uploads');
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath);
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage });
 // Signup Route
 router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -22,6 +38,7 @@ router.post('/signup', async (req, res) => {
       name,
       email,
       password,
+      filepath
     });
 
     // Save user to the database

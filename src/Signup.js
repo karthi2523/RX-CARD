@@ -119,12 +119,13 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [file, setFile] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(name, email, password)
+    signup(name, email, password,file)
       .then((result) => {
         console.log(result);
         // You can navigate to the login page after successful signup
@@ -190,7 +191,7 @@ const Signup = () => {
             placeholder="Patient Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            autoComplete="name"
+            
             required
           />
           <input
@@ -199,7 +200,7 @@ const Signup = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
+           
             required
           />
           <input
@@ -208,9 +209,15 @@ const Signup = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete="password"
+          
             required
           />
+          <input
+          name='file'
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+        required
+        />
           <input type="submit" value="Sign Up" />
         </form>
 
